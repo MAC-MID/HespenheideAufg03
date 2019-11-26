@@ -1,14 +1,15 @@
-LineAnimation test;
-LineAnimation test2;
+
+ArrayList<LineAnimation> allObjects = new ArrayList<LineAnimation>();
 
 void setup(){
   size(600,600);
   smooth ();
   frameRate(30);
   
-  test = new LineAnimation(width/2,height/2, 50, 1000);
-  test2 = new LineAnimation(100,100, 50, 1000);
-  
+}
+
+void mouseClicked() {
+  allObjects.add(new LineAnimation(mouseX,mouseY, 50, 1000));
 }
 
 void draw(){
@@ -16,10 +17,10 @@ void draw(){
   fill (76, 10);
   noStroke ();
   rect (0, 0, width, height);
-  
-  test.draw();
-  test2.draw();
-  
+
+  for(int i = 0; i < allObjects.size(); i++){
+    allObjects.get(i).draw();
+  }
 }
 
 

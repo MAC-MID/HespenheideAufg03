@@ -1,5 +1,3 @@
-RoundObject circles[] = new RoundObject[100];
-
 int counter = 0;
 boolean draw = false;
 
@@ -18,18 +16,7 @@ void setup(){
 }
 
 void draw(){
-  
-  createCircles ();
-  
-  
-  step1 += 0.005;
-  step2 += 0.008;
 
-}
-
-void createCircles () {
-  
-  circles[0] = new RoundObject (width/2, height/2, step1, step2);
 }
 
 
@@ -39,20 +26,37 @@ class Point {
   public float yPosition;
   color colour;
   
+  Point(float xPos, float yPos, color colour){
+    this.xPosition = xPos;
+    this.yPosition = yPos;
+    this.colour = colour;
+  }
+  
   public void draw(){
     vertex(this.xPosition,this.yPosition);
   }
+  
 }
 
 
-
-class RoundObject {
+class LineAnimation {
   
-  RoundObject(float positionX, float positionY, float step1, float step2){
-    translate(positionX, positionY);
+  ArrayList<Point> points;
+  
+  float xPosition;
+  float yPosition;
+  float size;
+  float step;
+
+  LineAnimation(float xPos, float yPos, float size, float pointNumber){
+    this.xPosition = xPos;
+    this.yPosition = yPos;
+    this.size = size;
+    this.step = 0;
     
-    beginShape();
-      for (float a = 0; a < TWO_PI; a+= 0.001){
+    points = new ArrayList<Point>();
+
+      for (float a = 0; a < TWO_PI; a+= TWO_PI/pointNumber){
     
         float xoff = map(cos(a+step1), -1,1,0,4);
         float yoff = map(sin(a+step2), -1,1,0,4);
@@ -63,10 +67,8 @@ class RoundObject {
         float x = r*cos(a);
         float y = r*sin(a);
         
-
+        points.add(new Point(x, y, 255));
       }
-    endShape(CLOSE);
-   
-  }
-  
+      
+    } 
 }

@@ -9,7 +9,7 @@ void setup(){
 }
 
 void mouseClicked() {
-  allObjects.add(new LineAnimation(mouseX,mouseY, 50, 1000));
+  allObjects.add(new LineAnimation(mouseX,mouseY, 50, 1000, color(random(0,255),random(0,255),random(0,255), 95)));
 }
 
 void draw(){
@@ -51,12 +51,16 @@ class LineAnimation {
   float yPosition;
   float size;
   float step;
+  
+  public color colour;
 
-  LineAnimation(float xPos, float yPos, float size, float pointNumber){
+  LineAnimation(float xPos, float yPos, float size, float pointNumber, color colour){
     this.xPosition = xPos;
     this.yPosition = yPos;
     this.size = size;
     this.step = random(0,100);
+    
+    this.colour = colour;
     
     points = new ArrayList<Point>();
 
@@ -69,7 +73,7 @@ class LineAnimation {
         float x = r*cos(a)+this.xPosition;
         float y = r*sin(a)+this.yPosition;
         
-        points.add(new Point(x, y, 255));
+        points.add(new Point(x, y, colour));
       }
     }
     
@@ -91,7 +95,7 @@ class LineAnimation {
     
     public void draw(){
       
-      stroke(236);
+      stroke(this.colour);
       strokeWeight(0.2);
       noFill();
       

@@ -1,22 +1,25 @@
-int counter = 0;
-boolean draw = false;
-
-float step1 = 0;
-float step2 = 0;
+LineAnimation test;
+LineAnimation test2;
 
 void setup(){
   size(600,600);
   smooth ();
   frameRate(30);
   
-  stroke(236);
-  strokeWeight(0.2);
-  noFill();
+  test = new LineAnimation(width/2,height/2, 50, 1000);
+  test2 = new LineAnimation(100,100, 50, 1000);
   
 }
 
 void draw(){
-
+  
+  fill (76, 10);
+  noStroke ();
+  rect (0, 0, width, height);
+  
+  test.draw();
+  test2.draw();
+  
 }
 
 
@@ -52,23 +55,53 @@ class LineAnimation {
     this.xPosition = xPos;
     this.yPosition = yPos;
     this.size = size;
-    this.step = 0;
+    this.step = random(0,100);
     
     points = new ArrayList<Point>();
 
       for (float a = 0; a < TWO_PI; a+= TWO_PI/pointNumber){
     
-        float xoff = map(cos(a+step1), -1,1,0,4);
-        float yoff = map(sin(a+step2), -1,1,0,4);
+        float xoff = map(cos(a+this.step), -1,1,0,4);
+        float yoff = map(sin(a), -1,1,0,4);
         
-        println(step1);
-        
-        float r = map(noise(xoff,yoff), 0, 1, 100, 200);
-        float x = r*cos(a);
-        float y = r*sin(a);
+        float r = map(noise(xoff,yoff), 0, 1, 70, 170);
+        float x = r*cos(a)+this.xPosition;
+        float y = r*sin(a)+this.yPosition;
         
         points.add(new Point(x, y, 255));
       }
+    }
+    
+    public void update(){
+      for(int i = 0; i < points.size(); i++){
+        float a = map(i, 0, points.size(), 0, TWO_PI);
+        
+        float xoff = map(cos(a+this.step), -1,1,0,4);
+        float yoff = map(sin(a), -1,1,0,4);
+        
+        float r = map(noise(xoff,yoff), 0, 1, 70, 170);
+        float x = r*cos(a)+this.xPosition;
+        float y = r*sin(a)+this.yPosition;
+        
+        points.get(i).xPosition = x;
+        points.get(i).yPosition = y;
+      }
+    }
+    
+    public void draw(){
       
-    } 
+      stroke(236);
+      strokeWeight(0.2);
+      noFill();
+      
+      this.update();
+      
+      beginShape();
+        for(int a = 0; a < points.size(); a++){
+          points.get(a).draw();
+        }
+      endShape(CLOSE);
+      
+      this.step += 0.01;
+    }
 }

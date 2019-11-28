@@ -1,3 +1,5 @@
+// Aufg 03, Marie Steinbrügge, 28.11.2019
+// basierend auf Code-Idee von Daniel Shiffman (https://processing.org/examples/noisewave.html)
 
 ArrayList<LineAnimation> allObjects = new ArrayList<LineAnimation>();
 
@@ -14,7 +16,7 @@ void mouseClicked() {
 
 void draw(){
   
-  fill (76, 10);
+  fill (76, 5);
   noStroke ();
   rect (0, 0, width, height);
 
